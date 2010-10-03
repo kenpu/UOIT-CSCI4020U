@@ -1,0 +1,31 @@
+Mycampus 
+  : section +
+  ;
+
+section 
+  : Java Class of
+    title
+    CRN
+    code
+    number
+    semester
+    year
+    registration
+    levels
+    campus
+    credits
+    capacity
+    actual
+    instructor_list : Vector<Instructor>
+    schedule_list: Vector<Schedule>
+  ;
+
+schedule
+  : Java Class of
+    type
+    time
+    days
+    where
+    daterange
+    scheduletype
+    instructor_list : Vector<String>
