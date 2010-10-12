@@ -53,11 +53,12 @@ jar:
 
 py:
 	cp src/fetchMyc.py bin
+	cp src/storeMyc.py bin
 
 clean:
 	rm -rf \
 	src/myc/MycampusParser.java \
 	src/myc/MycampusLexer.java \
-	src/myc/*.tokens *.tokens\
+	src/myc/*.tokens *.tokens \
 	./bin/*
 
