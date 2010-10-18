@@ -171,6 +171,8 @@ def store_section(section_js):
     section_js['registration'])
   sec.semester, sec.year = parse_semester(section_js['semester'])
   sec.course = course.code
+  sec.sec_code = sec_code
+  sec.sec_number = sec_num
 
   if sql.query(Course).filter(Course.code == course.code).count() == 0:
     sql.add(course)
