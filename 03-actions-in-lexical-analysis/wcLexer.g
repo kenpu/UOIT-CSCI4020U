@@ -17,8 +17,7 @@ import org.antlr.runtime.Token;
     wcLexer lexer = new wcLexer(input);
     while((t=lexer.nextToken()) != Token.EOF_TOKEN && t.getType() >= 0)
     {
-      if(t.getType() != wcLexer.NL)
-        System.out.println("<" + t.getType() + ">" + t.getText());
+    ;
     }
 
     System.out.println("Total words:" + lexer.wordcount);
