@@ -3,15 +3,8 @@ antlr = java -cp $(CLASSPATH) org.antlr.Tool
 javac = javac -cp $(CLASSPATH)
 java = java -cp $(CLASSPATH)
 
-all: Test.class
-
-Expr1 : Expr1.g
-	$(antlr) Expr1.g
-
-Expr2 : Expr2.g
-	$(antlr) Expr2.g
-
-Test.class : Test.java Expr1 Expr2
+all:
+	$(antlr) E.g
 	$(javac) Test.java
 
 run:

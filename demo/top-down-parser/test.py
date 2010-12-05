@@ -7,14 +7,14 @@ non-terminals
   E T E' T' F 
 """
 G = [
-  ('E', ['T',"E'"]),   # E -> T E'
-  ("E'", ['+', 'T', "E'"]),
-  ("E'", []),          # E' -> + T E' | epsilon
-  ("T", ['F', "T'"]),
-  ("T'", ["*", "F", "T'"]),
-  ("T'", []),
-  ("F", [ '(', 'E', ')' ]),
-  ("F", [ 'id' ])
+  ('E',  ['T',"E'", "eof"]),   # E -> T E'
+  ("E'", ['+', 'T', "E'"] ),
+  ("E'", []               ),   # E' -> + T E' | epsilon
+  ("T",  ['F', "T'"]      ),
+  ("T'", ["*", "F", "T'"] ),
+  ("T'", []               ),
+  ("F",  [ '(', 'E', ')' ]),
+  ("F",  [ 'id' ]         ),
 ]
 
 print_grammar(G)
@@ -36,4 +36,15 @@ print "\nThe predictive parsing table is:"
 M = build_parse_table(G, 'E')
 pprint(M)
 
+print "\nParsing an input now."
+input = Inputstream("id", "+", "id", "*", "id")
+print "Input is %s" % input.buf
+recursive_descending_parse(G, 'E', input)
 
+print "\nParsing an invalid input."
+input = Inputstream("id", "+", "id", "id")
+print "Input is %s" % input.buf
+try:
+  recursive_descending_parse(G, 'E', input)
+except Exception, e:
+  print str(e)

@@ -2,12 +2,12 @@ import re
 from collections import defaultdict
 
 class Inputstream:
-  def __init__(self, string):
-    self.buf = list(string)
+  def __init__(self, *tokens):
+    self.buf = list(tokens) + ['eof']
   def peek(self):
     return self.buf[0]
   def next(self):
-    return self.pop(0)
+    return self.buf.pop(0)
   def size(self):
     return len(self.buf)
 
@@ -40,17 +40,31 @@ end     = '$'
 def is_terminal(X):
   return not re.match('^[A-Z]', X) and X not in [epsilon, end]
 
-def recursive_descending_parse(G, start, input, **F):
-  parse_table = F['parse_table']
-  c = input.peek()
-  (head, body) = parse_table[start,c]
+def recursive_descending_parse(G, start, input, parse_table=None):
+  parsing_start = (parse_table == None)
+  if not parse_table:
+    parse_table = build_parse_table(G, start)
+  try:
+    c = input.peek()
+  except IndexError:
+    raise Exception("Parse error: EOF unexpected, expecting %s" % start)
+
+  try:
+    (head, body) = parse_table[start,c]
+  except KeyError:
+    raise Exception("Parse error: %s unexpected by rules of %s." % (c, start))
+  print "debug: %s -> %s, input=%s" % (head, " ".join(body), " ".join(input.buf))
   for X in body:
     if not is_terminal(X):
-      recursive_descending_parse(G, X, input)
+      recursive_descending_parse(G, X, input, parse_table)
     else:
-      c = input.next()
+      try:
+        c = input.next()
+      except IndexError:
+        return Exception("Parse error: EOF is unexpected: expecting %s" % X)
       if not X == c:
-        raise Exception("Parsing failed.")
+        raise Exception("Parse error: %s is unexpected: expecting %s" % (c, X))
+
 
 def build_parse_table(G, start):
   """
