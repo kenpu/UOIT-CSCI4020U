@@ -1,0 +1,4 @@
+make hello 100
+print hello for 5 times
+make hello (- hello 10)
+print hello for 3 times
