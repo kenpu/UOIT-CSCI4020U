@@ -4,7 +4,7 @@ expr.exe : y.tab.c lex.yy.c
 y.tab.c : expr.y
 	yacc -d expr.y
 
-lex.yy.c : expr.l
+lex.yy.c : expr.l y.tab.c
 	lex expr.l
 
 clean:
