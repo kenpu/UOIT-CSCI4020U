@@ -1,9 +1,12 @@
 grammar Expr2;
+options {
+  backtrack=true;
+}
 
 program : (expr NEWLINE)+
         ;
 
-expr : term ('+'|'-' expr)?
+expr : term (('+'|'-') expr)*
      ;
 
 term : INTEGER
@@ -12,4 +15,6 @@ term : INTEGER
 
 
 INTEGER : ('0' .. '9')+;
-NEWLINE : ('\r')? '\n';
+NEWLINE : '\n';
+/* Ignore whitespaces */
+WS : (' ' | '\t')+ {skip();};
