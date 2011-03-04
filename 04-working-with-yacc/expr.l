@@ -8,7 +8,7 @@
 
 [0-9]+      { return INTEGER; }
 
-[-+()\n]      { return *yytext; }
+[-+()\n]      { return yytext[0]; }
 
 [ \t]       ;       /* skip whitespace */
 

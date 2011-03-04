@@ -6,7 +6,8 @@ void yyerror(char *);
 
 %%
 
-program : expr '\n'
+program : program expr '\n'
+        |
         ;
 
 expr  : INTEGER
